@@ -1,5 +1,4 @@
-package com.hamitmizrak.bean;
-
+package com.example.springboot2026.bean;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
