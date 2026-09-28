@@ -28,7 +28,7 @@ public class BlogCategoryDto extends AuditingAwareBaseDto implements Serializabl
     private Long categoryId;
 
     // categoryName
-    @NotEmpty(message = "{blog.header.validation.constraints.NotNull.message}")
-    @Size(min=5,max=25, message="{blog.header.least.validation.constraints.NotNull.message}") //değişken için sınırlamalar ve gerekli hata mesajları belirlendi
+    @NotEmpty(message = "{blog.category.validation.constraints.NotNull.message}")
+    @Size(min=5,max=25, message="{blog.category.least.validation.constraints.NotNull.message}") //değişken için sınırlamalar ve gerekli hata mesajları belirlendi
     private String categoryName;
 }// end BlogCategoryDto
