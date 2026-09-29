@@ -1,16 +1,11 @@
 package com.example.springboot2026.data.entity;
 
 
-import com.example.springboot2026.audit.AuditingAwareBaseDto;
 import com.example.springboot2026.audit.AuditingAwareBaseEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
-
-import java.io.Serial;
-import java.io.Serializable;
+import java.util.List;
 
 //LOMBOK
 @Getter
@@ -38,7 +33,7 @@ public class BlogCategoryEntity extends AuditingAwareBaseEntity {
     private String categoryName;
 
     //******************************************
-    //Relation
-
-
+    //Relation One(MFC)//M= mapped, F=fetch, C= cascade
+    @OneToMany(mappedBy = "blogCategoryEntity", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    private List<BlogEntity> blogEntityList;
 }// end BlogCategoryEntity

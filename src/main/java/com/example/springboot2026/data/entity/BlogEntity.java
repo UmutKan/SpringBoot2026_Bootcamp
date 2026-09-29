@@ -3,8 +3,6 @@ package com.example.springboot2026.data.entity;
 
 import com.example.springboot2026.audit.AuditingAwareBaseEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
 
@@ -44,6 +42,6 @@ public class BlogEntity extends AuditingAwareBaseEntity {
 
     //******************************************
     //Relation
-
-
+    @ManyToOne
+    private BlogCategoryEntity blogCategoryEntity;
 }// end BlogEntity
