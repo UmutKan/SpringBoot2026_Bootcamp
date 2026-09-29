@@ -24,7 +24,7 @@ public class BlogEntity extends AuditingAwareBaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "blog_id")
-    private Long blogCategoryId;
+    private Long blogId;
 
     // Header
     @Column(nullable = false,unique = true)
