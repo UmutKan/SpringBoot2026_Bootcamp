@@ -2,8 +2,8 @@ package com.example.springboot2026.services.impl;
 
 import com.example.springboot2026.business.dto.BlogDto;
 import com.example.springboot2026.data.entity.BlogEntity;
+import com.example.springboot2026.services.interfaces.IBlogCategoryServices;
 import com.example.springboot2026.services.interfaces.IBlogServices;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.List;
 //SERVICE
 @Service
 
-public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
+public class BlogCategoryServicesImpl implements IBlogCategoryServices<BlogDto, BlogEntity> {
 
     // DI
 
@@ -73,38 +73,4 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
         return null;
     }
 
-    /// ////////////////////////////////////////////////////////////////
-    // IMAGE
-    @Override
-    public BlogDto objectServiceCreateWithFile(BlogDto blogDto, MultipartFile multipartFile) {
-        return null;
-    }
-
-    @Override
-    public BlogDto objectServiceUpdateWithFile(Long id, BlogDto blogDto, MultipartFile multipartFile) {
-        return null;
-    }
-
-
-    /// ////////////////////////////////////////////////////////////////
-    // PAGINATION & SORTING
-    @Override
-    public Page<BlogDto> objectServicePagination(int currentPage, int pageSize) {
-        return null;
-    }
-
-    @Override
-    public List<BlogDto> objectServiceListSortedByDefault(String sortedBy) {
-        return List.of();
-    }
-
-    @Override
-    public List<BlogDto> objectServiceListSortedByAsc() {
-        return List.of();
-    }
-
-    @Override
-    public List<BlogDto> objectServiceListSortedByDesc() {
-        return List.of();
-    }
 }//end BlogSercivesImpl
