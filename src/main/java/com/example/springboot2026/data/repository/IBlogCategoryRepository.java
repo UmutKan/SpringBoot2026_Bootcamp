@@ -50,5 +50,14 @@ public interface IBlogCategoryRepository extends JpaRepository<BlogCategoryEntit
         ORDER BY category.categoryName ASC 
         """)
     Optional<BlogCategoryEntity> findAllCategoriesOrderByNameJpql();
+
     //Native Query: ==> Gerçek databse tablo + kolon isimlerini kullanarak SQL sorguları üretiriz.
+    @Query(
+    value=
+    """
+    SELECT *
+    FROM blog_categories
+    WHERE LOWER(category_name) = LOWER(:categoryName)
+    """)
+    Optional<BlogCategoryEntity> findCategoryByNameNative(@Param("categoryName") String categoryName);
 }
