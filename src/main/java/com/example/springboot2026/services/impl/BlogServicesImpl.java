@@ -3,7 +3,6 @@ package com.example.springboot2026.services.impl;
 import com.example.springboot2026.business.dto.BlogDto;
 import com.example.springboot2026.data.entity.BlogEntity;
 import com.example.springboot2026.services.interfaces.IBlogServices;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -59,8 +58,8 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
     }
 
     @Override
-    public List<BlogDto> objectServiceFindById(Long id) {
-        return List.of();
+    public BlogDto objectServiceFindById(Long id) {
+        return null;
     }
 
     @Override

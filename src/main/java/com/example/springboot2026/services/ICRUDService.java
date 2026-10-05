@@ -11,7 +11,7 @@ public interface ICRUDService <D,E>{
     public List<D> objectServiceList();
 
     // FIND BY ID
-    public List<D>  objectServiceFindById(Long id);
+    public D  objectServiceFindById(Long id);
 
     // UPDATE
     public D objectServiceUpdate(Long id, D d);
