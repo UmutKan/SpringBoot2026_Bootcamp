@@ -66,7 +66,6 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
     }
 
     /// ////////////////////////////////////////////////////////////////
-
     /// Generics Null Validation
     private <T> T validateNotNull(T value, String message) {
         if (value == null) {
@@ -74,7 +73,6 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
         }
         return value;
     }
-
 
     /// Generics String Validation
     private Long validateId(Long id, String objectName) {
@@ -101,26 +99,49 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
         return blogDto;
     }
 
-    /// validateBlogCategoryId
+    // Blog Category ID Validation
     private Long validateBlogCategoryId(BlogDto blogDto, boolean required) {
-        return null;
+        validateNotNull(blogDto, "Blog verisi boş");
+
+        Long categoryId = blogDto.getBlogCategoryDto() == null
+                ? null
+                : blogDto.getBlogCategoryDto().getBlogCategoryId();
+
+        if (categoryId == null && !required) {
+            return null;
+        }
+
+        return validateId(categoryId, "Blog Category");
     }
 
-    /// Blog Entity Find
+    // Blog Entity Find
     private BlogEntity findBlogEntityById(Long id) {
-        return null;
+        Long validatedId = validateId(id, "Blog");
+        return iBlogRepository.findById(validatedId)
+                .orElseThrow(() -> new _404_NotFoundException(
+                        "Blog id " + validatedId + " blog bulunamadı"));
     }
 
-    /// BlogCategoryEntity Find
-    private BlogCategoryEntity findBlogCategoryEntityById(Long id) {
-        return null;
+    // Blog Category Entity Find
+    private BlogCategoryEntity findBlogCategoryEntityById(Long categoryId) {
+        Long validatedCategoryId = validateId(categoryId, "Blog Category");
+        return iBlogCategoryRepository.findById(validatedCategoryId)
+                .orElseThrow(() -> new _404_NotFoundException(
+                        validatedCategoryId + " id'li kategori bulunamadı"));
     }
 
-    /// Delete
-    private void deleteImageSafely(String imageUrl){
+    // Image Delete Helper
+    private void deleteImageSafely(String imageUrl) {
+        if (imageUrl == null || imageUrl.isBlank() || !imageUrl.startsWith("/upload/")) {
+            return;
+        }
 
+        try {
+            imageService.deleteByUrl(imageUrl);
+        } catch (Exception exception) {
+            log.error("Blog resmi silinemedi. imageUrl={}, message={}", imageUrl, exception.getMessage(), exception);
+        }
     }
-
 
     /// Generics String Validation
     private String validateNotBlank(String value, String message) {
@@ -185,16 +206,41 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
     /// ////////////////////////////////////////////////////////////////
     // SPEED DATA
     @Override
+    @Transactional
     public List<BlogDto> speedData(Integer data) {
-
         int dataCount = validatePositiveNumber(data, " Speed Data sayısı");
-        return List.of();
+
+        // Find first BlogCategory
+        BlogCategoryEntity defaultBlogCategory = iBlogCategoryRepository.findAll().stream().findFirst().orElseThrow(() -> new _404_NotFoundException("Speed Data oluşturmak için en az 1 adet blog category olması gerekiyor."));
+
+        for (int i = 1; i <= dataCount; i++) {
+            BlogEntity blogEntity = BlogEntity.builder()
+                    .header("Blog-" + System.nanoTime())
+                    .title("Blog Title" + i)
+                    .content("BlogContent")
+                    .image(null)
+                    .blogCategoryEntity(defaultBlogCategory)
+                    .build();
+
+            iBlogRepository.save(blogEntity);
+        }
+        return objectServiceListSortedByAsc();
     }
 
 
+    // DELETE ALL
     @Override
+    @Transactional
     public List<BlogDto> deleteData() {
-        return List.of();
+
+        //Dosya Sistemlerinde blog resimlerin hepsini temizle
+        iBlogRepository.findAll().forEach(blogEntity -> deleteImageSafely(blogEntity.getImage()));
+
+        // Database kayıtlarını Temizle
+        iBlogRepository.deleteAll();
+
+        // Silme sonrasında boş liste dönsün
+        return objectServiceList();
     }
 
 
