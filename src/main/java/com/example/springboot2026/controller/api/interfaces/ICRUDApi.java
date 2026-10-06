@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public interface ICRUDApi<D,E>{
+public interface ICRUDApi<D>{
     // CRUD
     // CREATE
     public ResponseEntity<ApiResult<?>> objectApiCreate(D d);

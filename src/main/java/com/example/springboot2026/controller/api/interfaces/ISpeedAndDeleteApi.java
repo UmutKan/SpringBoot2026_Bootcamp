@@ -1,14 +1,19 @@
 package com.example.springboot2026.controller.api.interfaces;
 
+import com.example.springboot2026.error.ApiResult;
+import org.springframework.http.ResponseEntity;
+
 import java.util.List;
 
-public interface ISpeedAndDeleteApi<D,E>{
+// D: Dto
+public interface ISpeedAndDeleteApi<D> {
 
     // SPEED CREATE & DELETE
     // SPEED DATA
-    public List<D> speedData(Integer data);
+    public ResponseEntity<ApiResult<List<D>>> speedData(Integer data);
 
     // DELETE ALL
-    public List<D> deleteData();
+    public ResponseEntity<ApiResult<List<D>>> deleteData();
+
 
 }
