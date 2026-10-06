@@ -1,4 +1,4 @@
-package com.example.springboot2026.services.impl;
+package com.example.springboot2026.business.services.impl;
 
 import com.example.springboot2026.bean.ModelMapperBean;
 import com.example.springboot2026.business.dto.BlogDto;
@@ -10,7 +10,7 @@ import com.example.springboot2026.data.repository.IBlogRepository;
 import com.example.springboot2026.exception.HamitMizrakException;
 import com.example.springboot2026.exception._404_NotFoundException;
 import com.example.springboot2026.file_upload.ImageService;
-import com.example.springboot2026.services.interfaces.IBlogServices;
+import com.example.springboot2026.business.services.interfaces.IBlogServices;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;

@@ -1,4 +1,4 @@
-package com.example.springboot2026.services;
+package com.example.springboot2026.business.services;
 
 import java.util.List;
 

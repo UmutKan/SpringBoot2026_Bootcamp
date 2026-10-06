@@ -1,4 +1,4 @@
-package com.example.springboot2026.services.impl;
+package com.example.springboot2026.business.services.impl;
 
 import com.example.springboot2026.bean.ModelMapperBean;
 import com.example.springboot2026.business.dto.BlogCategoryDto;
@@ -6,7 +6,7 @@ import com.example.springboot2026.data.entity.BlogCategoryEntity;
 import com.example.springboot2026.data.mapper.BlogCategoryMapper;
 import com.example.springboot2026.data.repository.IBlogCategoryRepository;
 import com.example.springboot2026.exception._404_NotFoundException;
-import com.example.springboot2026.services.interfaces.IBlogCategoryServices;
+import com.example.springboot2026.business.services.interfaces.IBlogCategoryServices;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
