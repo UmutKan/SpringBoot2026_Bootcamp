@@ -12,10 +12,10 @@ public interface IImageApi<D>{
 
     // IMAGE
     // IMAGE CREATE
-    public ResponseEntity<ApiResult<?>> objectServiceCreateWithFile(String json, MultipartFile multipartFile);
+    public ResponseEntity<ApiResult<?>> objectApiCreateWithFile(String json, MultipartFile multipartFile);
 
     // IMAGE UPDATE
-    public ResponseEntity<ApiResult<?>> objectServiceUpdateWithFile(Long id, String json, MultipartFile multipartFile);
+    public ResponseEntity<ApiResult<?>> objectApiUpdateWithFile(Long id, String json, MultipartFile multipartFile);
 
 
 }
