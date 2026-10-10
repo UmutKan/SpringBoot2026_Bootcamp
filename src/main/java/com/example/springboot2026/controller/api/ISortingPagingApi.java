@@ -1,4 +1,4 @@
-package com.example.springboot2026.controller.api.interfaces;
+package com.example.springboot2026.controller.api;
 
 import org.springframework.data.domain.Page;
 

@@ -1,4 +1,10 @@
 package com.example.springboot2026.controller.api.interfaces;
 
-public interface IBlogApi {
+
+import com.example.springboot2026.controller.api.ICRUDApi;
+import com.example.springboot2026.controller.api.IImageApi;
+import com.example.springboot2026.controller.api.ISpeedAndDeleteApi;
+
+public interface IBlogApi<D> extends ISpeedAndDeleteApi<D>, ICRUDApi<D>, IImageApi<D> {
+
 }
