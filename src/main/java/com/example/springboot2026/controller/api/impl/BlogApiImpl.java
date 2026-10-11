@@ -6,7 +6,6 @@ import com.example.springboot2026.business.services.interfaces.IBlogServices;
 import com.example.springboot2026.controller.api.interfaces.IBlogApi;
 import com.example.springboot2026.data.entity.BlogEntity;
 import com.example.springboot2026.error.ApiResult;
-import com.example.springboot2026.file_upload.FileProps;
 import com.example.springboot2026.utily.FrontEnd;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
@@ -15,9 +14,9 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 //LOMBOK
@@ -35,8 +34,8 @@ public class BlogApiImpl  implements IBlogApi<BlogDto> {
     // Field
     private final IBlogServices<BlogDto, BlogEntity> iBlogServices;
     private final ObjectMapper objectMapper;
-    private final FileProps fileProps;
-    private final JdbcTemplate jdbcTemplate;
+    //private final FileProps fileProps;
+    //private final JdbcTemplate jdbcTemplate;
 
     /// ///////////////////////////////////////////////////////////////
     /// SPEED DATA
@@ -58,10 +57,16 @@ public class BlogApiImpl  implements IBlogApi<BlogDto> {
 
     /// ///////////////////////////////////////////////////////////////
     /// CREATE RESIMSIZ (BLOG)
+    /// http://localhost:5555/blog/api/v1.0.0/create
     @Override
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResult<?>> objectApiCreate(@Valid @RequestBody BlogDto blogDto) {
-        return null;
+        try{
+            return ResponseEntity.ok(ApiResult.success(iBlogServices.objectServiceCreate(blogDto)));
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return ResponseEntity.ok(ApiResult.error("serverError",ex.getMessage(),"/blog/api/v1.0.0/create"));
+        }
     }
 
     /// CREATE RESIMLI (BLOG)
@@ -70,7 +75,13 @@ public class BlogApiImpl  implements IBlogApi<BlogDto> {
     public ResponseEntity<ApiResult<?>> objectApiCreateWithFile(
             @RequestPart("blog") String json,
             @RequestPart(value = "file",required = false) MultipartFile multipartFile) {
-        return null;
+        try{
+            BlogDto blogDto = objectMapper.readValue(json,BlogDto.class);
+            return ResponseEntity.ok(ApiResult.success(iBlogServices.objectServiceCreateWithFile(blogDto,multipartFile)));
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return ResponseEntity.ok(ApiResult.error("serverError",ex.getMessage(),"/blog/api/v1.0.0/create"));
+        }
     }
 
 
@@ -78,23 +89,34 @@ public class BlogApiImpl  implements IBlogApi<BlogDto> {
     @Override
     @GetMapping("/list")
     public ResponseEntity<ApiResult<List<BlogDto>>> objectApiList() {
-        return null;
+        try {
+            return ResponseEntity.ok(ApiResult.success(iBlogServices.objectServiceList()));
+        }catch (Exception ex){
+            return ResponseEntity.ok(ApiResult.error("serverError", ex.getMessage(),"/blog/api/v1.0.0/liste"));
+        }
     }
 
     /// FIND BY ID (BLOG)
     @Override
     @GetMapping("/find/{id}")
     public ResponseEntity<ApiResult<?>> objectApiFindById(@PathVariable(name = "id") Long id) {
-        return null;
+        try {
+            return ResponseEntity.ok(ApiResult.success(iBlogServices.objectServiceFindById(id)));
+        }catch (Exception ex){
+            return ResponseEntity.ok(ApiResult.error("serverError", ex.getMessage(),"/blog/api/v1.0.0/find/1"));
+        }
     }
 
     /// UPDATE RESIMSIZ (BLOG) ==> AYNI ZAMANDA MEVCUT RESİMİ KORUSU
     @Override
     @PutMapping(value ="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResult<?>> objectApiUpdate(@PathVariable(name = "id") Long id, @Valid @RequestBody BlogDto blogDto) {
-        return null;
+        try {
+            return ResponseEntity.ok(ApiResult.success(iBlogServices.objectServiceUpdate(id,blogDto)));
+        }catch (Exception ex){
+            return ResponseEntity.ok(ApiResult.error("serverError", ex.getMessage(),"/blog/api/v1.0.0/find/1"));
+        }
     }
-
 
     /// UPDATE RESIMLI (BLOG)
     @Override
@@ -103,21 +125,30 @@ public class BlogApiImpl  implements IBlogApi<BlogDto> {
             @PathVariable(name = "id") Long id,
             @RequestPart("blog") String json,
             @RequestPart(value = "file",required = false) MultipartFile multipartFile) {
-        return null;
+        try{
+            BlogDto blogDto = objectMapper.readValue(json,BlogDto.class);
+            return ResponseEntity.ok(ApiResult.success(iBlogServices.objectServiceUpdateWithFile(id,blogDto,multipartFile)));
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return ResponseEntity.ok(ApiResult.error("serverError",ex.getMessage(),"/blog/api/v1.0.0/update"));
+        }
     }
 
     /// DELETE (BLOG)
     @Override
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<ApiResult<?>> objectApiDelete(@PathVariable(name = "id") Long id) {
-        return null;
+        try {
+            return ResponseEntity.ok(ApiResult.success(iBlogServices.objectServiceDelete(id)));
+        }catch (Exception ex){
+            return ResponseEntity.ok(ApiResult.error("serverError", ex.getMessage(),"/blog/api/v1.0.0/delete/"+id));
+        }
     }
 
 
     /// /////////////////////////////////////////////////////////////////////
     /// PAGINATION & SORTING
-
-    ///  PAGINATION
+    /// PAGINATION
     @Override
     @GetMapping
     public Page<BlogDto> objectApiPagination(int currentPage, int pageSize) {
