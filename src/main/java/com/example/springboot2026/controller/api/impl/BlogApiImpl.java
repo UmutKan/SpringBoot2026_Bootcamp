@@ -6,12 +6,16 @@ import com.example.springboot2026.business.services.interfaces.IBlogServices;
 import com.example.springboot2026.controller.api.interfaces.IBlogApi;
 import com.example.springboot2026.data.entity.BlogEntity;
 import com.example.springboot2026.error.ApiResult;
+import com.example.springboot2026.file_upload.FileProps;
 import com.example.springboot2026.utily.FrontEnd;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
@@ -30,6 +34,9 @@ public class BlogApiImpl  implements IBlogApi<BlogDto> {
     // DI
     // Field
     private final IBlogServices<BlogDto, BlogEntity> iBlogServices;
+    private final ObjectMapper objectMapper;
+    private final FileProps fileProps;
+    private final JdbcTemplate jdbcTemplate;
 
     /// ///////////////////////////////////////////////////////////////
     /// SPEED DATA
@@ -37,7 +44,7 @@ public class BlogApiImpl  implements IBlogApi<BlogDto> {
     @Override
     @GetMapping("/speed")
     public ResponseEntity<ApiResult<List<BlogDto>>> speedData(Integer data) {
-        return null;
+        return ResponseEntity.ok(ApiResult.success(iBlogServices.speedData(data)));
     }
 
     /// DELETE DATA
@@ -45,58 +52,63 @@ public class BlogApiImpl  implements IBlogApi<BlogDto> {
     @Override
     @GetMapping("/delete-all")
     public ResponseEntity<ApiResult<List<BlogDto>>> deleteData() {
-        return null;
+        return ResponseEntity.ok(ApiResult.success(iBlogServices.deleteData()));
     }
 
 
     /// ///////////////////////////////////////////////////////////////
     /// CREATE RESIMSIZ (BLOG)
     @Override
-    @PostMapping
+    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResult<?>> objectApiCreate(@Valid @RequestBody BlogDto blogDto) {
         return null;
     }
 
     /// CREATE RESIMLI (BLOG)
     @Override
-    @PostMapping
-    public ResponseEntity<ApiResult<?>> objectApiCreateWithFile(String json, MultipartFile multipartFile) {
+    @PostMapping(value="/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ApiResult<?>> objectApiCreateWithFile(
+            @RequestPart("blog") String json,
+            @RequestPart(value = "file",required = false) MultipartFile multipartFile) {
         return null;
     }
 
 
     ///  LIST (BLOG)
     @Override
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<ApiResult<List<BlogDto>>> objectApiList() {
         return null;
     }
 
     /// FIND BY ID (BLOG)
     @Override
-    @GetMapping
-    public ResponseEntity<ApiResult<?>> objectApiFindById(Long id) {
+    @GetMapping("/find/{id}")
+    public ResponseEntity<ApiResult<?>> objectApiFindById(@PathVariable(name = "id") Long id) {
         return null;
     }
 
-    /// UPDATE RESIMLI (BLOG)
+    /// UPDATE RESIMSIZ (BLOG) ==> AYNI ZAMANDA MEVCUT RESİMİ KORUSU
     @Override
-    @PutMapping
+    @PutMapping(value ="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResult<?>> objectApiUpdate(@PathVariable(name = "id") Long id, @Valid @RequestBody BlogDto blogDto) {
         return null;
     }
 
 
-    /// UPDATE RESIMSIZ (BLOG)
+    /// UPDATE RESIMLI (BLOG)
     @Override
-    @PutMapping
-    public ResponseEntity<ApiResult<?>> objectApiUpdateWithFile(@PathVariable(name = "id") Long id, String json, MultipartFile multipartFile) {
+    @PutMapping(value="/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ApiResult<?>> objectApiUpdateWithFile(
+            @PathVariable(name = "id") Long id,
+            @RequestPart("blog") String json,
+            @RequestPart(value = "file",required = false) MultipartFile multipartFile) {
         return null;
     }
 
     /// DELETE (BLOG)
     @Override
-    @DeleteMapping
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<ApiResult<?>> objectApiDelete(@PathVariable(name = "id") Long id) {
         return null;
     }
