@@ -150,28 +150,28 @@ public class BlogApiImpl  implements IBlogApi<BlogDto> {
     /// PAGINATION & SORTING
     /// PAGINATION
     @Override
-    @GetMapping
+    @GetMapping("a1")
     public Page<BlogDto> objectApiPagination(int currentPage, int pageSize) {
         return null;
     }
 
     ///  SORTING
     @Override
-    @GetMapping
+    @GetMapping("a2")
     public List<BlogDto> objectApiListSortedByDefault(String sortedBy) {
         return List.of();
     }
 
     ///  SORTING ASC
     @Override
-    @GetMapping
+    @GetMapping("a3")
     public List<BlogDto> objectApiListSortedByAsc() {
         return List.of();
     }
 
     ///  SORTING DESC
     @Override
-    @GetMapping
+    @GetMapping("a3")
     public List<BlogDto> objectApiListSortedByDesc() {
         return List.of();
     }
