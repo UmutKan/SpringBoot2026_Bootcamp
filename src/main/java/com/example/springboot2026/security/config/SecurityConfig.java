@@ -1,8 +1,8 @@
-package com.example.springboot2026.security;
+package com.example.springboot2026.security.config;
 
 /*
 Basit Spring Security: JWT ve kullanıcı verştabanı yoktur
-Swagger/OpenAI: http://localhost:5555/swagger-ui/index.html
+Swagger/OpenAPI: http://localhost:5555/swagger-ui/index.html
 H2DB: http://localhost:5555/h2-console
  */
 /*
