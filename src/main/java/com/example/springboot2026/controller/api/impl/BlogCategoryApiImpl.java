@@ -54,6 +54,20 @@ public class BlogCategoryApiImpl implements IBlogCategoryApi<BlogCategoryDto> {
     @Override
     public ResponseEntity<ApiResult<?>> objectApiCreate(@Valid @RequestBody BlogCategoryDto blogCategoryDto) {
         try {
+
+            // 1.YOL
+            //return ResponseEntity.status(201).body(ApiResult.success(iBlogCategoryServices.objectServiceCreate(blogCategoryDto)));
+
+            // 2.YOL
+            //return ResponseEntity.status(HttpStatus.CREATED).body(ApiResult.success(iBlogCategoryServices.objectServiceCreate(blogCategoryDto)));
+
+            // 3.YOL
+            //return new ResponseEntity<>(ApiResult.success(iBlogCategoryServices.objectServiceCreate(blogCategoryDto)), HttpStatus.CREATED);
+
+            // 4.YOL
+            //return ResponseEntity.ok().body(ApiResult.success(iBlogCategoryServices.objectServiceCreate(blogCategoryDto)));
+
+            // 5.YOL
             return ResponseEntity.ok(ApiResult.success(iBlogCategoryServices.objectServiceCreate(blogCategoryDto)));
         }catch (Exception ex){
             return ResponseEntity.ok(ApiResult.error("serverError", ex.getMessage(),"/blog/category/api/v1.0.0/create"));
